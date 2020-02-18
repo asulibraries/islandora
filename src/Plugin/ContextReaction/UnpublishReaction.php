@@ -9,7 +9,7 @@ use Drupal\islandora\PresetReaction\PresetReaction;
  *
  * @ContextReaction(
  *   id = "unpublish_reaction",
- *   label = @Translation("Index")
+ *   label = @Translation("Unpublish")
  * )
  */
 class UnpublishReaction extends PresetReaction {}
