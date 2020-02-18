@@ -81,14 +81,22 @@ function islandora_node_insert(NodeInterface $node) {
  * Implements hook_node_update().
  */
 function islandora_node_update(NodeInterface $node) {
-
   $utils = \Drupal::service('islandora.utils');
   if (!$utils->haveFieldsChanged($node, $node->original)) {
     return;
   };
-
+  \Drupal::logger('islandora')->info('is node published' . $node->isPublished());
+  \Drupal::logger('islandora')->info('node original published ' . $node->original->isPublished());
   // Execute index reactions.
   $utils->executeNodeReactions('\Drupal\islandora\Plugin\ContextReaction\IndexReaction', $node);
+  if ($node->isPublished() && !$node->original->isPublished()) {
+    // fire the publish actions
+    \Drupal::logger('islandora')->info('going from unpub to pub');
+  }
+  if (!$node->isPublished() && $node->original->isPublished()){
+    // fire the unpublish actions aka tombstone the stuff
+    \Drupal::logger('islandora')->info('going from pub to unpub');
+  }
 }
 
 /**
