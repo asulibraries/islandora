@@ -85,17 +85,17 @@ function islandora_node_update(NodeInterface $node) {
   if (!$utils->haveFieldsChanged($node, $node->original)) {
     return;
   };
-  \Drupal::logger('islandora')->info('is node published' . $node->isPublished());
-  \Drupal::logger('islandora')->info('node original published ' . $node->original->isPublished());
   // Execute index reactions.
   $utils->executeNodeReactions('\Drupal\islandora\Plugin\ContextReaction\IndexReaction', $node);
   if ($node->isPublished() && !$node->original->isPublished()) {
     // fire the publish actions
     \Drupal::logger('islandora')->info('going from unpub to pub');
+    $utils->executeNodeReactions('\Drupal\islandora\Plugin\ContextReaction\PublishReaction', $node);
   }
   if (!$node->isPublished() && $node->original->isPublished()){
     // fire the unpublish actions aka tombstone the stuff
     \Drupal::logger('islandora')->info('going from pub to unpub');
+    $utils->executeNodeReactions('\Drupal\islandora\Plugin\ContextReaction\UnpublishReaction', $node);
   }
 }
 
