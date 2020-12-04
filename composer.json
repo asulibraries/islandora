@@ -58,5 +58,12 @@
       "email": "dlamb@islandora.ca",
       "role": "Maintainer"
     }
-  ]
+  ],
+  "extra": {
+	"patches": {
+		"drupal/hook_post_action": {
+			"patch info file for d9 support": "https://www.drupal.org/files/issues/2020-09-28/patch-3173548.patch"
+		}
+	}
+  }
 }
