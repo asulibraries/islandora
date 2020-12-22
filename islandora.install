@@ -74,7 +74,7 @@ function islandora_update_8004() {
 /**
  * Makes migrate_tags an array.
  */
-function islandora_update_8007() {
+function islandora_update_8005() {
   $config_factory = \Drupal::configFactory();
   $config_factory->getEditable('migrate_plus.migration.islandora__tags')->delete();
   $config = $config_factory->getEditable('migrate_plus.migration.islandora_tags');
