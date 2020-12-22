@@ -92,6 +92,12 @@ function islandora_update_8005() {
       $config->save(TRUE);
     }
   }
+}
+
+/**
+ * Remove config added by mistake.
+ */
+function islandora_update_8006() {
   // This was added by mistake in 8004.
-  $config->delete('migrate_plus.migration.islandora__tags');
+  $config_factory->getEditable('migrate_plus.migration.islandora__tags')->delete();
 }
