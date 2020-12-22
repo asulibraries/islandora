@@ -89,3 +89,4 @@ function islandora_update_8007() {
       $config->save(TRUE);
     }
   }
+}
