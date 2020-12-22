@@ -70,3 +70,28 @@ function islandora_update_8004() {
     }
   }
 }
+
+/**
+ * Makes migrate_tags an array.
+ */
+function islandora_update_8005() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('migrate_plus.migration.islandora_tags');
+  if ($config) {
+    if (!$config->get('migrate_tags')) {
+      $config->set('migrate_tags', [$config->get('migrate_tags')]);
+      $config->save(TRUE);
+    }
+  }
+  // This is what 8004 was supposed to do.
+  $config = $config_factory->getEditable('migrate_plus.migration.islandora_tags');
+  if ($config) {
+    if (!$config->get('source.ids')) {
+      $config->set('source.ids', $config->get('source.keys'));
+      $config->clear('source.keys');
+      $config->save(TRUE);
+    }
+  }
+  // This was added by mistake in 8004.
+  $config->delete('migrate_plus.migration.islandora__tags');
+}
