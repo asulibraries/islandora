@@ -79,7 +79,7 @@ function islandora_update_8005() {
   $config_factory->getEditable('migrate_plus.migration.islandora__tags')->delete();
   $config = $config_factory->getEditable('migrate_plus.migration.islandora_tags');
   if ($config) {
-    if (!$config->get('migration_tags')) {
+    if (!is_array($config->get('migration_tags'))) {
       $config->set('migration_tags', [$config->get('migration_tags')]);
       $config->save(TRUE);
     }
