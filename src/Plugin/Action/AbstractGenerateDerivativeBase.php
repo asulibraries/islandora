@@ -56,7 +56,7 @@ class AbstractGenerateDerivativeBase extends EmitEvent {
    */
   protected $config;
 
-    /**
+  /**
    * The entity field manager.
    *
    * @var \Drupal\Core\Entity\EntityFieldManager
@@ -148,7 +148,7 @@ class AbstractGenerateDerivativeBase extends EmitEvent {
           $container->get('token'),
           $container->get('messenger'),
           $container->get('config.factory'),
-	  $container->get('entity_field.manager')
+          $container->get('entity_field.manager')
       );
   }
 
