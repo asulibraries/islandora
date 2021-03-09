@@ -5,7 +5,6 @@ namespace Drupal\islandora_video\Plugin\Field\FieldFormatter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\islandora\Plugin\Field\FieldFormatter\IslandoraFileMediaFormatterBase;
 
-
 /**
  * Plugin implementation of the 'file_video' formatter.
  *

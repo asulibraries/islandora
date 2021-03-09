@@ -2,13 +2,10 @@
 
 namespace Drupal\islandora\Plugin\Field\FieldWidget;
 
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManager;
-use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
-
 
 /**
  * Plugin implementation of the 'media_track' widget.
@@ -24,38 +21,16 @@ use Drupal\file\Plugin\Field\FieldWidget\FileWidget;
 class MediaTrackWidget extends FileWidget {
 
   /**
-   * Constructs a MediaTrackWidget object.
-   *
-   * @param string $plugin_id
-   *   The plugin_id for the widget.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
-   *   The definition of the field to which the widget is associated.
-   * @param array $settings
-   *   The widget settings.
-   * @param array $third_party_settings
-   *   Any third party settings.
-   * @param \Drupal\Core\Render\ElementInfoManagerInterface $element_info
-   *   The element info manager service.
-   *
-   * @todo Is this constructor necessary? Remove if it doesn't need to differ from parent.
-   */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, ElementInfoManagerInterface $element_info) {
-    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings, $element_info);
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
     return [
-        'progress_indicator' => 'throbber',
-            ] + parent::defaultSettings();
+      'progress_indicator' => 'throbber',
+    ] + parent::defaultSettings();
   }
 
   /**
-   * Overrides \Drupal\file\Plugin\Field\FieldWidget\FileWidget::formMultipleElements().
+   * Overrides FileWidget::formMultipleElements().
    *
    * Special handling for draggable multiple widgets and 'add more' button.
    */
@@ -64,10 +39,10 @@ class MediaTrackWidget extends FileWidget {
 
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
     $file_upload_help = [
-        '#theme' => 'file_upload_help',
-        '#description' => '',
-        '#upload_validators' => $elements[0]['#upload_validators'],
-        '#cardinality' => $cardinality,
+      '#theme' => 'file_upload_help',
+      '#description' => '',
+      '#upload_validators' => $elements[0]['#upload_validators'],
+      '#cardinality' => $cardinality,
     ];
     if ($cardinality == 1) {
       // If there's only one field, return it as delta 0.
@@ -84,9 +59,9 @@ class MediaTrackWidget extends FileWidget {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    *
-   *            add the field settings so they can be used in the process method
+   * Add the field settings so they can be used in the process method.
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
@@ -129,27 +104,30 @@ class MediaTrackWidget extends FileWidget {
       '#access' => (bool) $item['fids'],
     ];
 
-    $srclang_options =  [];
+    $srclang_options = [];
     if ($element['#field_settings']['languages'] == 'all') {
-      // need to list all languages
+      // Need to list all languages.
       $languages = LanguageManager::getStandardLanguageList();
-      foreach ($languages AS $key => $language) {
+      foreach ($languages as $key => $language) {
         if ($language[0] == $language[1]) {
-          // both the native language name and the English language name are
-          // the same, so only show one of them
+          // Both the native language name and the English language name are
+          // the same, so only show one of them.
           $srclang_options[$key] = $language[0];
         }
         else {
-          // the native language name and English language name are different
-          // so show both of them
-          $srclang_options[$key] = t('@lang0 / @lang1', ['@lang0' => $language[0], '@lang1' => $language[1]]);
+          // The native language name and English language name are different
+          // so show both of them.
+          $srclang_options[$key] = t('@lang0 / @lang1', [
+            '@lang0' => $language[0],
+            '@lang1' => $language[1],
+          ]);
         }
       }
     }
     else {
-      // only list the installed languages
+      // Only list the installed languages.
       $languages = \Drupal::languageManager()->getLanguages();
-      foreach ($languages AS $key => $language) {
+      foreach ($languages as $key => $language) {
         $srclang_options[$key] = $language->getName();
       }
     }
@@ -164,7 +142,6 @@ class MediaTrackWidget extends FileWidget {
       '#access' => (bool) $item['fids'],
       '#element_validate' => [[get_called_class(), 'validateRequiredFields']],
     ];
-    // @todo checkbox or radio? Note this has unusual validation requirements!
     // @see https://www.w3.org/TR/html/semantics-embedded-content.html#elementdef-track
     $element['default'] = [
       '#type' => 'checkbox',
@@ -178,14 +155,11 @@ class MediaTrackWidget extends FileWidget {
   }
 
   /**
-   * Validate callback for kind/srclang/label/default
+   * Validate callback for kind/srclang/label/default.
    *
    * This is separated in a validate function instead of a #required flag to
    * avoid being validated on the process callback.
-   *
-   * @todo Do we actually need anything here? This is copied from ImageWidget.
-   *   Haven't yet decided if the extra inputs on media track are to be validated.
-   *   The 'default' track boolean has complex validation, see the HTML5.2 rec for details.
+   * The 'default' track has complex validation, see HTML5.2 for details.
    */
   public static function validateRequiredFields($element, FormStateInterface $form_state) {
     // Only do validation if the function is triggered from other places than

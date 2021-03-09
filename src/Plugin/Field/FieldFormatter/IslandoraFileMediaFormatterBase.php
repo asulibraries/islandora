@@ -8,7 +8,11 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Template\Attribute;
 
+/**
+ * Extension of FileMediaFormatterBase that enables captions.
+ */
 abstract class IslandoraFileMediaFormatterBase extends FileMediaFormatterBase {
+
   /**
    * {@inheritdoc}
    */
@@ -39,11 +43,13 @@ abstract class IslandoraFileMediaFormatterBase extends FileMediaFormatterBase {
     return $elements;
   }
 
-    /**
+  /**
    * Gets the track files with attributes.
    *
    * @param \Drupal\Core\Field\EntityReferenceFieldItemListInterface $items
-   * @param                                       $langcode
+   *   The items.
+   * @param string $langcode
+   *   The langcode.
    *
    * @return array
    *   Numerically indexed array, which again contains an associative array with
@@ -55,14 +61,14 @@ abstract class IslandoraFileMediaFormatterBase extends FileMediaFormatterBase {
     $track_files = [];
     $media_entity = $items->getParent()->getEntity();
     $fields = $media_entity->getFields();
-    foreach ($fields AS $key => $field) {
+    foreach ($fields as $key => $field) {
       $definition = $field->getFieldDefinition();
       if (method_exists($definition, 'get')) {
         if ($definition->get('field_type') == 'media_track') {
-          // extract the info for each track
+          // Extract the info for each track.
           $entities = $field->referencedEntities();
           $values = $field->getValue();
-          foreach ($entities AS $delta => $file) {
+          foreach ($entities as $delta => $file) {
             $track_attributes = new Attribute();
             $track_attributes
               ->setAttribute('src', $file->createFileUrl())
@@ -82,6 +88,5 @@ abstract class IslandoraFileMediaFormatterBase extends FileMediaFormatterBase {
     }
     return $track_files;
   }
-
 
 }

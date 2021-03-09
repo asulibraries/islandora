@@ -1,6 +1,7 @@
 <?php
 
 namespace Drupal\islandora_audio\Plugin\Field\FieldFormatter;
+
 use Drupal\islandora\Plugin\Field\FieldFormatter\IslandoraFileMediaFormatterBase;
 
 /**

@@ -9,7 +9,6 @@ use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\file\Plugin\Field\FieldType\FileItem;
 
-
 /**
  * Plugin implementation of the 'media_track' field type.
  *
@@ -188,33 +187,28 @@ class MediaTrackItem extends FileItem {
     // @todo This will need to generate a text file, containing a sequence of
     // timestamps and nonsense text. Include some gap periods where nothing is
     // displayed.
-
     // See the ImageItem::generateSampleValue() for how the files are saved.
     // The part about "Generate a max of 5 different images" is a good idea
     // here too. We only need a WebVTT few files.
-
-    // See one of the text item implementation for how to generate nonsense text.
-
+    // See one of the text item implementation for how to generate nonsense.
     // Pseudocode plan...
-
     // $sample_file_text = 'WEBVTT'; // start of file.
     // for ($i = 0; $ < $utterances; $i++) {
-      // $sample_file_text += \n\n
-      // $timestamp += 3-10seconds // start of display
-      // $sample_file_text += $timestamp
-      // $timestamp += 3-10seconds // end of display
-      // $sample_file_text += $timestamp
-      // $sample_file_text += randomText()
+    // $sample_file_text += \n\n
+    // $timestamp += 3-10seconds // start of display
+    // $sample_file_text += $timestamp
+    // $timestamp += 3-10seconds // end of display
+    // $sample_file_text += $timestamp
+    // $sample_file_text += randomText()
     // }
     // $file = file_write($sample_file_text, 'random_filename.vtt');
-
     $values = [
       'target_id' => $file->id(),
-      // randomize the rest of these...
+      // Randomize the rest of these...
       'label' => '',
       'kind' => '',
       'srclang' => '',
-      // careful with this one, complex validation.
+      // Careful with this one, complex validation.
       'default' => '',
     ];
     return $values;
