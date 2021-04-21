@@ -20,10 +20,8 @@
 
     function init(context,settings){
         if (!initialized){
-            console.log("hello audio");
             initialized = true;
 	    $('audio')[0].textTracks[0].oncuechange = function() {
-		console.log("changed");
 		var currentCue = this.activeCues[0].text;
 		$('#audioTrack').html(currentCue);
 	    }

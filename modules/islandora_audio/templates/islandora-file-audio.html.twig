@@ -16,7 +16,6 @@
 */
 #}
 <div id="audioTrack"></div>
-{#<video {{ attributes }} controls poster="http://localhost:8000/sites/default/files/2021-03/1-Service%20File.jpg">#}
 <audio {{ attributes }}>
   {% for file in files %}
     <source {{ file.source_attributes }} />
