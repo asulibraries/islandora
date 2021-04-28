@@ -21,7 +21,7 @@
     <source {{ file.source_attributes }} />
     {% if tracks %}
     {% for track in tracks %}
-      <track {{ track.track_attributes }} default />
+      <track {{ track.track_attributes }} />
     {% endfor %}
     {% endif %}
   {% endfor %}
