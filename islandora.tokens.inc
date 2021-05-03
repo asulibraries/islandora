@@ -62,6 +62,7 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
         ]);
       return;
     }
+    $islandoraUtils = \Drupal::service('islandora.utils');
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'media-thumbnail-image:url':
@@ -82,7 +83,6 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
         case 'media-thumbnail-image:alt':
         case 'media_thumbnail_image:alt':
           $alt = '';
-          $islandoraUtils = \Drupal::service('islandora.utils');
           $term = $islandoraUtils->getTermForUri('http://pcdm.org/use#ThumbnailImage');
           $media = $islandoraUtils->getMediaWithTerm($data['node'], $term);
           // Is there media?
@@ -108,7 +108,7 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
  * @todo: Add to IslandoraUtils?
  * @todo: Had to remove typehint MediaInterface from function.
  *
- * @param \Drupal\media\MediaInterface $media
+ * @param \Drupal\islandora\MediaSource\MediaSourceService $media
  *   The Media to operate on.
  *
  * @return mixed
