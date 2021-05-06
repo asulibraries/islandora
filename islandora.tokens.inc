@@ -56,7 +56,7 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
   $replacements = [];
   if ($type == 'islandoratokens' && !empty($data['node'])) {
     if (!is_array($tokens) || empty($tokens)) {
-      \Drupal::logger('controlled_access_terms')
+      \Drupal::logger('islandora')
         ->alert('Tokens not correct format: @tokens', [
           '@tokens' => print_r($tokens, 1),
         ]);
@@ -72,7 +72,7 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
           // Is there media?
           // @todo: is this single or multiple?
           if ($media) {
-            $file = controlled_access_terms_image_from_media($media);
+            $file = \Drupal::service('islandora.media_source_service')->getSourceFile($media);
             if (!empty($file)) {
               $url = $file->url();
               $replacements[$original] = $url;
@@ -101,24 +101,3 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
   }
   return $replacements;
 }
-
-/**
- * Get File referenced by given Media.
- *
- * @todo: Add to IslandoraUtils?
- * @todo: Had to remove typehint MediaInterface from function.
- *
- * @param \Drupal\islandora\MediaSource\MediaSourceService $media
- *   The Media to operate on.
- *
- * @return mixed
- *   \Drupal\file\FileInterface on success, NULL otherwise.
- */
-function controlled_access_terms_image_from_media($media) {
-  $files = [];
-  if ($media->hasField('field_media_image')) {
-    $files = $media->get('field_media_image')->referencedEntities();
-  }
-  return !empty($files) ? reset($files) : NULL;
-}
-
