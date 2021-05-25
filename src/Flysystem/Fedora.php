@@ -17,7 +17,7 @@ use Islandora\Chullo\IFedoraApi;
 use Islandora\Chullo\FedoraApi;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
+use Symfony\Component\Mime\MimeTypeGuesserInterface;
 
 /**
  * Drupal plugin for the Fedora Flysystem adapter.
@@ -38,7 +38,7 @@ class Fedora implements FlysystemPluginInterface, ContainerFactoryPluginInterfac
   /**
    * Mimetype guesser.
    *
-   * @var \Symfony\Component\HttpFoundation\File\Mimetype\MimeTypeGuesserInterface
+   * @var \Symfony\Component\Mime\MimeTypeGuesserInterface
    */
   protected $mimeTypeGuesser;
 
@@ -54,7 +54,7 @@ class Fedora implements FlysystemPluginInterface, ContainerFactoryPluginInterfac
    *
    * @param \Islandora\Chullo\IFedoraApi $fedora
    *   Fedora client.
-   * @param \Symfony\Component\HttpFoundation\File\Mimetype\MimeTypeGuesserInterface $mime_type_guesser
+   * @param \Symfony\Component\Mime\MimeTypeGuesserInterface $mime_type_guesser
    *   Mimetype guesser.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   Language manager.

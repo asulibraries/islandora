@@ -9,7 +9,7 @@ use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\Config;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\StreamWrapper;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
+use Symfony\Component\Mime\MimeTypeGuesserInterface;
 
 /**
  * Fedora adapter for Flysystem.
@@ -29,7 +29,7 @@ class FedoraAdapter implements AdapterInterface {
   /**
    * Mimetype guesser.
    *
-   * @var \Symfony\Component\HttpFoundation\File\Mimetype\MimeTypeGuesserInterface
+   * @var \Symfony\Component\Mime\MimeTypeGuesserInterface
    */
   protected $mimeTypeGuesser;
 
@@ -38,7 +38,7 @@ class FedoraAdapter implements AdapterInterface {
    *
    * @param \Islandora\Chullo\IFedoraApi $fedora
    *   Fedora client.
-   * @param \Symfony\Component\HttpFoundation\File\Mimetype\MimeTypeGuesserInterface $mime_type_guesser
+   * @param \Symfony\Component\Mime\MimeTypeGuesserInterface $mime_type_guesser
    *   Mimetype guesser.
    */
   public function __construct(IFedoraApi $fedora, MimeTypeGuesserInterface $mime_type_guesser) {
