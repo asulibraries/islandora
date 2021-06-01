@@ -7,10 +7,7 @@
  * This file provides islandora tokens.
  */
 
-use Drupal\media\Entity\Media;
-use Drupal\file\Entity\File;
 use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\islandora\IslandoraUtils;
 
 /**
  * Implements hook_token_info().
@@ -42,7 +39,6 @@ function islandora_token_info() {
     'description' => t('Deprecated: Alternative text for Thumbnail Image associated with Islandora Object via Media.'),
   ];
 
-
   return [
     'types' => ['islandoratokens' => $type],
     'tokens' => ['islandoratokens' => $node],
@@ -57,9 +53,11 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
   if ($type == 'islandoratokens' && !empty($data['node'])) {
     if (!is_array($tokens) || empty($tokens)) {
       \Drupal::logger('islandora')
-        ->alert('Tokens not correct format: @tokens', [
-          '@tokens' => print_r($tokens, 1),
-        ]);
+        ->alert(
+            'Tokens not correct format: @tokens', [
+              '@tokens' => print_r($tokens, 1),
+            ]
+        );
       return;
     }
     $islandoraUtils = \Drupal::service('islandora.utils');
@@ -70,7 +68,7 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
           $term = $islandoraUtils->getTermForUri('http://pcdm.org/use#ThumbnailImage');
           $media = $islandoraUtils->getMediaWithTerm($data['node'], $term);
           // Is there media?
-          // @todo: is this single or multiple?
+          // @todo is this single or multiple?
           if ($media) {
             $file = \Drupal::service('islandora.media_source_service')->getSourceFile($media);
             if (!empty($file)) {
@@ -86,14 +84,15 @@ function islandora_tokens($type, $tokens, array $data, array $options, Bubbleabl
           $term = $islandoraUtils->getTermForUri('http://pcdm.org/use#ThumbnailImage');
           $media = $islandoraUtils->getMediaWithTerm($data['node'], $term);
           // Is there media?
-          // @todo: is this single or multiple?
+          // @todo is this single or multiple?
           if ($media) {
             // Is the media an image?
             if (isset($media->field_media_image)) {
               $alt = $media->field_media_image[0]->alt;
             }
           }
-          // @todo: get alt from original or service file, if thumbnail alt is empty.
+          // @todo get alt from original or service file, if thumbnail
+          // alt is empty.
           $replacements[$original] = $alt;
           break;
       }
