@@ -146,6 +146,9 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
     try {
       $user = $this->entityTypeManager->getStorage('user')->load($this->account->id());
       $data = $this->generateData($entity);
+      if (!$data) {
+	$data = [];
+      }
       $message = new Message(
         $this->eventGenerator->generateEvent($entity, $user, $data),
         ['Authorization' => "Bearer $token"]

@@ -52,6 +52,8 @@ class AbstractGenerateDerivative extends AbstractGenerateDerivativeBase {
     }
 
     $data['source_uri'] = $this->utils->getDownloadUrl($source_file);
+    $data['source_uri'] = str_replace('http://', 'https://', $data['source_uri']);
+
 
     // Find the term for the derivative and use it to set the destination url
     // in the data array.
@@ -68,6 +70,7 @@ class AbstractGenerateDerivative extends AbstractGenerateDerivativeBase {
     $data['destination_uri'] = Url::fromRoute('islandora.media_source_put_to_node', $route_params)
       ->setAbsolute()
       ->toString();
+    $data['destination_uri'] = str_replace('http://', 'https://', $data['destination_uri']);
 
     $token_data = [
       'node' => $entity,
@@ -76,6 +79,12 @@ class AbstractGenerateDerivative extends AbstractGenerateDerivativeBase {
     ];
     $path = $this->token->replace($data['path'], $token_data);
     $data['file_upload_uri'] = $data['scheme'] . '://' . $path;
+
+
+    $mids = $this->utils->getMediaWithTerm($entity, $derivative_term);
+    if ($mids) {
+        throw new \RuntimeException("derivative already exists for node " . $entity->id() . " with term " . $data['derivative_term_uri']);
+    }
 
     // Get rid of some config so we just pass along
     // what the camel route and microservice need.

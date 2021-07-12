@@ -101,7 +101,7 @@ function islandora_update_8005() {
 /**
  * Adds adds previously hardcoded namespaces to configuration.
  */
-function islandora_update_8006() {
+function islandora_update_8009() {
   update_jsonld_included_namespaces();
 }
 
@@ -137,9 +137,6 @@ function update_jsonld_included_namespaces() {
     ], [
       'prefix' => 'rdf',
       'namespace' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-    ], [
-      'prefix' => 'rdau',
-      'namespace' => 'http://rdaregistry.info/Elements/u/',
     ], [
       'prefix' => 'islandora',
       'namespace' => 'http://islandora.ca/',

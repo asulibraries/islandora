@@ -107,9 +107,9 @@ function islandora_media_update(MediaInterface $media) {
 
   // Exit early if nothing's changed.
   $utils = \Drupal::service('islandora.utils');
-  if (!$utils->haveFieldsChanged($media, $media->original)) {
-    return;
-  };
+  //if (!$utils->haveFieldsChanged($media, $media->original)) {
+  //  return;
+  //};
 
   // Execute index reactions.
   $utils->executeMediaReactions('\Drupal\islandora\Plugin\ContextReaction\IndexReaction', $media);
@@ -120,9 +120,9 @@ function islandora_media_update(MediaInterface $media) {
   }
 
   // Exit early if the source file did not change.
-  if ($media->get($source_field)->equals($media->original->get($source_field))) {
-    return;
-  }
+  //if ($media->get($source_field)->equals($media->original->get($source_field))) {
+  //  return;
+  //}
   // If it has a parent node...
   $node = $utils->getParentNode($media);
   if ($node) {
